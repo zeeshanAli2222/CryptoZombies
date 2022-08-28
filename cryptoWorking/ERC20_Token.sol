@@ -1,9 +1,4 @@
 pragma solidity ^0.8.0;
-
-//interface tokenRecipient { 
-  //  function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; 
-//}
-
 contract TokenERC20 {
     // Public variables of the token
     string public name;
@@ -25,11 +20,8 @@ contract TokenERC20 {
     // This notifies clients about the amount burnt
     event Burn(address indexed from, uint256 value);
 
-    /**
-     * Constructor function
-     *
-     * Initializes contract with initial supply tokens to the creator of the contract
-     */
+   
+    // Constructor function Initializes contract with initial supply tokens to the creator of the contract
     constructor(
         uint256 initialSupply,
         string memory tokenName,
@@ -70,42 +62,24 @@ contract TokenERC20 {
         return true;
     }
 
-    /**
-     * Transfer tokens from other address
-     *
-     * Send `_value` tokens to `_to` on behalf of `_from`
-     *
-     * @param _from The address of the sender
-     * @param _to The address of the recipient
-     * @param _value the amount to send
-     */
-    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+   
+     // Transfer tokens from other address
+     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
         require(_value <= allowance[_from][msg.sender]);     // Check allowance
         allowance[_from][msg.sender] -= _value;
         _transfer(_from, _to, _value);
         return true;
     }
 
-    /**
-     * Set allowance for other address
-     *
-     * Allows `_spender` to spend no more than `_value` tokens on your behalf
-     *
-     * @param _spender The address authorized to spend
-     * @param _value the max amount they can spend
-     */
-    function approve(address _spender, uint256 _value) public
+    
+   //   Set allowance for other address
+     function approve(address _spender, uint256 _value) public
         returns (bool success) {
         allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
-    
-    
-    
-
-    
     //  Destroy tokens
      
     function burn(uint256 _value) public returns (bool success) {
